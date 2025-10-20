@@ -196,10 +196,18 @@ footer p {
 
 /* 📱 Адаптивное отображение таблицы выбора фигурок */
 
-  .card img:focus {
-  outline: none;
-  box-shadow: none;
-  }
+  .card img,
+.card img:focus,
+.card img:active {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent; /* убирает синий отблеск на мобильных устройствах */
+}
+
+.card img:focus-visible {
+  outline: 2px solid rgba(212,175,55,0.8); /* мягкий золотой контур для клавиатурной навигации */
+  outline-offset: 4px;
+}
 </style>
 
 </head>
@@ -448,6 +456,7 @@ function closeModal() {
 
 </body>
 </html>
+
 
 
 
