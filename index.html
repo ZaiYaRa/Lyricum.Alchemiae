@@ -193,6 +193,40 @@ footer p {
 #imageModal:target {
   display: flex;
 }
+
+  /* 📱 Адаптивное отображение таблицы выбора фигурок */
+@media (max-width: 900px) {
+  .checkbox-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .checkbox-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .checkbox-grid label {
+    font-size: 0.8em;
+    padding: 6px 8px;
+  }
+
+  #total {
+    font-size: 1.1em;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1.4em;
+  }
+}
+
 </style>
 </head>
 
@@ -416,3 +450,4 @@ function closeModal() {
 
 </body>
 </html>
+
