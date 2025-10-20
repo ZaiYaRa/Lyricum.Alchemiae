@@ -288,16 +288,101 @@ footer p {
 
   <div id="total">Итог: <span id="sum">0𓏢</span></div>
 
-  
+  <style>
+    #price-section {
+      text-align: center;
+      padding: 40px 20px;
+      color: #222;
+    }
+
+    .section-title {
+      font-family: 'Daneehand Regular Cyr', cursive;
+      font-size: 2em;
+      color: #d8b45b;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px rgba(255, 255, 200, 0.6);
+    }
+
+    /* 🜂 Адаптивная таблица 5×4 */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px 16px;
+      justify-items: stretch;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .checkbox-grid label {
+      display: block;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-family: 'Daneehand Regular Cyr', cursive;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: #222;
+      text-align: left;
+    }
+
+    .checkbox-grid label:hover {
+      background: rgba(255, 255, 255, 0.45);
+      transform: scale(1.05);
+    }
+
+    /* 💫 Мобильные устройства */
+    @media (max-width: 600px) {
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 📱 Планшеты */
+    @media (min-width: 601px) and (max-width: 900px) {
+      .checkbox-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* 💻 Компьютеры */
+    @media (min-width: 901px) {
+      .checkbox-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    /* ✴ Итоговая сумма */
+    #total {
+      margin-top: 35px;
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px 30px;
+      border-radius: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #222;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    /* Эффект вспышки алхимического света */
+    #total.flash {
+      box-shadow: 0 0 25px rgba(255, 230, 160, 0.9);
+      background: rgba(255, 255, 240, 0.9);
+      color: #b38b2b;
+    }
+  </style>
 
   <script>
     const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
     const total = document.getElementById('sum');
     const totalBox = document.getElementById('total');
 
-    checkboxes.forEach(box => {
-      box.addEventListener('change', updateTotal);
-    });
+    checkboxes.forEach(box => box.addEventListener('change', updateTotal));
 
     function updateTotal() {
       const selected = Array.from(checkboxes).filter(b => b.checked);
@@ -306,7 +391,6 @@ footer p {
         return;
       }
 
-      // Подсчёт по частям
       let beforeSum = 0;
       let afterSum = 0;
       let lastSymbol = "𓏢";
@@ -315,17 +399,17 @@ footer p {
         beforeSum += parseInt(b.dataset.before);
         afterSum += parseInt(b.dataset.after);
         const symbols = Array.from(checkboxes).map(b => b.dataset.symbol);
-lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
+        lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];
       });
 
       total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
 
-      // Эффект "вспышки" алхимического света
       totalBox.classList.add("flash");
       setTimeout(() => totalBox.classList.remove("flash"), 400);
     }
   </script>
 </section>
+
 
 
 
@@ -386,6 +470,7 @@ function closeModal() {
 
 </body>
 </html>
+
 
 
 
