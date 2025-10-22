@@ -445,9 +445,19 @@ footer p {
 <div id="imageModal" onclick="closeModal()">
   <img id="modalImage" src="">
 </div>
-  
+  <script>
+function openModal(src) {
+  document.getElementById("modalImage").src = src;
+  document.getElementById("imageModal").style.display = "flex";
+}
+function closeModal() {
+  document.getElementById("imageModal").style.display = "none";
+}
+</script>
+
 </body>
 </html>
+
 
 
 
