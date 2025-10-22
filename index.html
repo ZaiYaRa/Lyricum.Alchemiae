@@ -719,9 +719,58 @@ checkboxes.forEach(label => {
   });
 });
 </script>
+<script>
+// 🔹 Модальное окно (восстанавливаем)
+function openModal(src) {
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  modalImg.src = src;
+  modal.style.display = 'flex';
+}
 
+function closeModal() {
+  const modal = document.getElementById('imageModal');
+  modal.style.display = 'none';
+}
+
+// 🔹 Последовательность для тайной фигурки
+const sequence = [
+  "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
+  "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
+  "Гранат", "Аметист", "Александрит", "Лабрадорит"
+];
+
+let progress = [];
+const entelechy = document.getElementById('entelechy');
+const checkboxes = document.querySelectorAll('.checkbox-grid label');
+
+checkboxes.forEach(label => {
+  const input = label.querySelector('input');
+  input.addEventListener('change', () => {
+    const name = label.textContent.split('—')[0].trim();
+
+    if (input.checked) {
+      progress.push(name);
+    } else {
+      progress = progress.filter(n => n !== name);
+    }
+
+    // Проверяем совпадение с нужным порядком
+    if (JSON.stringify(progress) === JSON.stringify(sequence)) {
+      entelechy.style.display = 'block';
+      entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      // Если порядок сбит — башня снова исчезает
+      entelechy.style.display = 'none';
+    }
+  });
+});
+</script>
+
+  
 </body>
 </html>
+
 
 
 
