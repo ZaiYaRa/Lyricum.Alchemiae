@@ -701,30 +701,12 @@ footer p {
 
   checkboxes.forEach(input => {
     input.addEventListener('change', () => {
-      const name = input.parentElement.textContent.split('—')[0].trim();
+      // Берём имя ДО тире и убираем
 
-      // Добавляем в последовательность при выборе
-      if (input.checked) progress.push(name);
-      else progress = progress.filter(n => n !== name);
-
-      // Проверяем текущий шаг
-      const currentStep = sequence[progress.length - 1];
-      if (name !== currentStep) {
-        progress = []; // сброс при ошибке
-      }
-
-      // Если вся последовательность совпала
-      if (progress.length === sequence.length &&
-          JSON.stringify(progress) === JSON.stringify(sequence)) {
-        entelechy.style.display = 'block';
-        entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-  });
-</script>
 
 </body>
 </html>
+
 
 
 
