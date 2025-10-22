@@ -479,12 +479,13 @@ footer p {
 <div class="card"><img src="https://iili.io/KvYHSpt.jpg" onclick="openModal(this.src)"><h3>Турмалин — Фотоаппарат памяти</h3><p>Каждый миг — драгоценность. Турмалин хранит отблески прожитых мгновений, превращая память в свет.</p><p>3🜉60 𓏢</p></div>
 </div>
   <!-- ✴ Тайная фигурка "Энтелехия — Архитектор фрактала" -->
-<div id="entelechy" class="card entelechy-hidden" onclick="openModal('https://iili.io/KUw4pbp.jpg')">
+<div id="entelechy" class="card" style="display: none;" onclick="openModal('https://iili.io/KUw4pbp.jpg')">
   <img src="https://iili.io/KUw4pbp.jpg" alt="Энтелехия — Архитектор фрактала">
   <h3>Энтелехия — Архитектор фрактала</h3>
   <p>Вавилонская башня рождается, когда порядок достигает предела и становится хаосом. Башня из пенометалла, фрактальная и пористая, соединяющая эру кода и алхимии.</p>
   <p>∞⟠∞ 𓏢</p>
 </div>
+
 
 <section id="price-section">
   <h2 class="section-title">Выбери свои талисманы</h2>
@@ -689,23 +690,39 @@ footer p {
 </div>
 
 <script>
-  const sequence = [
-    "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
-    "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
-    "Гранат", "Аметист", "Александрит", "Лабрадорит"
-  ];
+const sequence = [
+  "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
+  "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
+  "Гранат", "Аметист", "Александрит", "Лабрадорит"
+];
 
-  let progress = [];
-  const entelechy = document.getElementById('entelechy');
-  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+let progress = [];
+const entelechy = document.getElementById('entelechy');
+const checkboxes = document.querySelectorAll('.checkbox-grid label');
 
-  checkboxes.forEach(input => {
-    input.addEventListener('change', () => {
-      // Берём имя ДО тире и убираем
+checkboxes.forEach(label => {
+  const input = label.querySelector('input');
+  input.addEventListener('change', () => {
+    const name = label.textContent.split('—')[0].trim();
 
+    if (input.checked) {
+      progress.push(name);
+    } else {
+      progress = progress.filter(n => n !== name);
+    }
+
+    // Проверяем точное совпадение с последовательностью
+    if (JSON.stringify(progress) === JSON.stringify(sequence)) {
+      entelechy.style.display = 'block';
+      entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
