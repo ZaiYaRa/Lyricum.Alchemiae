@@ -451,6 +451,76 @@ footer p {
 
 <section id="price-section">
   <h2 class="section-title">Выбери свои талисманы</h2>
+  <!-- ✴ Тайная фигурка "Энтелехия — Архитектор фрактала" -->
+<div id="entelechy" class="entelechy-hidden">
+  <img src="https://iili.io/KUw4pbp.jpg" alt="Энтелехия — Архитектор фрактала">
+    <h3>Энтелехия — Архитектор фрактала</h3>
+  <p>Она рождается, когда порядок достигает предела и становится хаосом. Башня из пенометалла, фрактальная и пористая, соединяющая эру кода и алхимии.</p>
+  <p>∞⟠∞ 𓏢</p>
+
+</div>
+
+<style>
+  /* 🌙 Стиль скрытой фигурки */
+  #entelechy {
+    display: none;
+    margin: 30px auto 40px;
+    text-align: center;
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  #entelechy img {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(180, 220, 255, 0.7))
+            drop-shadow(0 0 25px rgba(255, 240, 180, 0.5));
+    transition: transform 1.2s ease;
+  }
+
+  #entelechy img:hover {
+    transform: scale(1.05) rotate(2deg);
+  }
+
+  #entelechy p {
+    font-family: 'Daneehand Regular Cyr', cursive;
+    font-size: 1.4em;
+    color: #e7e0d3;
+    text-shadow: 0 0 10px rgba(255, 255, 200, 0.8);
+  }
+
+  @keyframes fadeIn {
+    0% {opacity: 0; transform: scale(0.9);}
+    100% {opacity: 1; transform: scale(1);}
+  }
+</style>
+
+<script>
+  const sequence = [
+    "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
+    "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
+    "Гранат", "Аметист", "Александрит", "Лабрадорит"
+  ];
+
+  let progress = [];
+  const checkboxesSeq = document.querySelectorAll('.checkbox-grid label');
+  const entelechy = document.getElementById('entelechy');
+
+  checkboxesSeq.forEach(label => {
+    const input = label.querySelector('input');
+    input.addEventListener('change', () => {
+      const name = label.textContent.trim().split('—')[0].trim();
+      if (input.checked) progress.push(name);
+      else progress = progress.filter(n => n !== name);
+
+      // Проверка на полное совпадение
+      if (JSON.stringify(progress) === JSON.stringify(sequence)) {
+        entelechy.style.display = 'block';
+        entelechy.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+    });
+  });
+</script>
+
 
   <div class="checkbox-grid">
     <label><input type="checkbox" data-before="4" data-symbol="☿" data-after="50"> Алмаз — Лев стратегии</label>
@@ -664,77 +734,9 @@ function closeModal() {
 }
 </script>
 
-  <!-- 🌌 Тайная карточка -->
-<div class="card secret" id="entelechy-card" style="display:none;">
-  <img src="https://iili.io/KUw4pbp.jpg" alt="Энтелехия — Архитектор фрактала">
-  <h3>Энтелехия — Архитектор фрактала</h3>
-  <p> Вавилонская Башня рождается, когда порядок достигает предела и становится хаосом. Башня из пенометалла, фрактальная и пористая, соединяющая эру кода и алхимии.</p>
-  <p>∞⟠∞ 𓏢</p>
-</div>
-
-<style>
-.secret {
-  opacity: 0;
-  transition: opacity 1.4s ease, transform 1.2s ease;
-  transform: scale(0.95);
-}
-.secret.revealed {
-  display: block !important;
-  opacity: 1;
-  transform: scale(1);
-  box-shadow: 0 0 25px rgba(0, 191, 255, 0.7);
-}
-</style>
-
-<script>
-  const sequence = [
-    "Розовый кварц — Книга выбора",
-    "Рубин — Дверь истины",
-    "Сапфир — Весы равновесия",
-    "Турмалин — Фотоаппарат памяти",
-    "Нефрит — Ящерица метаморфоз",
-    "Лазурит — Поющая раковина",
-    "Морганит — Мягкость рассвета",
-    "Топаз — Солнце равновесия",
-    "Малахит — Древо познания",
-    "Янтарь — Нити мироздания",
-    "Гранат — Фрукт пламени",
-    "Аметист — Пробуждение жизни",
-    "Александрит — Монета чудес",
-    "Лабрадорит — Экспресс перемен"
-  ];
-
-  const entelechyCard = document.getElementById("entelechy-card");
-  const checkboxesAll = document.querySelectorAll('.checkbox-grid label');
-
-  let currentStep = 0;
-
-  checkboxesAll.forEach(label => {
-    const input = label.querySelector("input");
-    input.addEventListener("change", () => {
-      const labelText = label.textContent.trim();
-
-      // Если текущий шаг совпадает с нужным названием
-      if (input.checked && labelText.includes(sequence[currentStep])) {
-        currentStep++;
-        if (currentStep === sequence.length) {
-          entelechyCard.style.display = "block";
-          setTimeout(() => entelechyCard.classList.add("revealed"), 100);
-        }
-      } 
-      // Если сбой в последовательности — сброс
-      else if (input.checked && !labelText.includes(sequence[currentStep])) {
-        currentStep = 0;
-        entelechyCard.classList.remove("revealed");
-        entelechyCard.style.display = "none";
-        checkboxesAll.forEach(l => l.querySelector("input").checked = false);
-      }
-    });
-  });
-</script>
-
 </body>
 </html>
+
 
 
 
