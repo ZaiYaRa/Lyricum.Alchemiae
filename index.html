@@ -419,6 +419,7 @@ footer p {
   outline-offset: 4px;
 }
   
+<style>
 #entelechy {
   display: none;
   background: url('https://iili.io/KvDAPFn.jpg') center/cover no-repeat;
@@ -442,7 +443,34 @@ footer p {
 #entelechy img:hover {
   transform: scale(1.05) rotate(1deg);
 }
+</style>
+<style>
+  /* 🌙 Стиль тайной карточки */
+  #entelechy {
+    display: none;
+    margin: 40px auto;
+    width: 280px;
+    cursor: pointer;
+    animation: entFade 1.5s ease forwards;
+  }
 
+  @keyframes entFade {
+    0% {opacity: 0; transform: translateY(30px) scale(0.95);}
+    100% {opacity: 1; transform: translateY(0) scale(1);}
+  }
+
+  #entelechy img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(200, 240, 255, 0.6);
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+  }
+
+  #entelechy:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 255, 200, 0.7);
+  }
+</style>
 
   </style>
 
@@ -718,6 +746,7 @@ footer p {
   
 </body>
 </html>
+
 
 
 
