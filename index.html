@@ -419,32 +419,31 @@ footer p {
   outline-offset: 4px;
 }
   <style>
-  /* 🌙 Стиль тайной карточки */
-  #entelechy {
-    display: none;
-    margin: 40px auto;
-    width: 280px;
-    cursor: pointer;
-    animation: entFade 1.5s ease forwards;
-  }
+#entelechy {
+  display: none;
+  background: url('https://iili.io/KvDAPFn.jpg') center/cover no-repeat;
+  border: 2px solid gold;
+  border-radius: 16px;
+  width: 260px;
+  margin: 30px auto;
+  padding: 15px;
+  color: #222;
+  animation: fadeIn 1.5s ease forwards;
+  cursor: pointer;
+}
 
-  @keyframes entFade {
-    0% {opacity: 0; transform: translateY(30px) scale(0.95);}
-    100% {opacity: 1; transform: translateY(0) scale(1);}
-  }
+#entelechy img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 240, 180, 0.5);
+  transition: transform 1.2s ease;
+}
 
-  #entelechy img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(200, 240, 255, 0.6);
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
-  }
-
-  #entelechy:hover img {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 255, 200, 0.7);
-  }
+#entelechy img:hover {
+  transform: scale(1.05) rotate(1deg);
+}
 </style>
+
   </style>
 
 </head>
@@ -686,16 +685,6 @@ footer p {
 </div>
 
 <script>
-function openModal(src) {
-  document.getElementById("modalImage").src = src;
-  document.getElementById("imageModal").style.display = "flex";
-}
-function closeModal() {
-  document.getElementById("imageModal").style.display = "none";
-}
-</script>
-
-<script>
   const sequence = [
     "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
     "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
@@ -704,29 +693,32 @@ function closeModal() {
 
   let progress = [];
   const entelechy = document.getElementById('entelechy');
-  const checkboxesSeq = document.querySelectorAll('.checkbox-grid label input');
+  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
 
-  checkboxesSeq.forEach(input => {
+  checkboxes.forEach(input => {
     input.addEventListener('change', () => {
-      const name = input.parentElement.textContent.trim().split('—')[0].trim();
+      // Получаем название без описания
+      const name = input.parentElement.textContent.split('—')[0].trim();
 
-      if (input.checked) progress.push(name);
-      else progress = progress.filter(n => n !== name);
+      if (input.checked) {
+        progress.push(name);
+      } else {
+        progress = progress.filter(n => n !== name);
+      }
 
-      // Обрезаем до длины последовательности
-      if (progress.length > sequence.length) progress.shift();
-
-      // Проверяем совпадение
-      if (JSON.stringify(progress) === JSON.stringify(sequence)) {
+      // Проверка на полное совпадение
+      if (progress.join(',') === sequence.join(',')) {
         entelechy.style.display = 'block';
-        entelechy.scrollIntoView({behavior: 'smooth', block: 'center'});
+        entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
   });
 </script>
+
   
 </body>
 </html>
+
 
 
 
