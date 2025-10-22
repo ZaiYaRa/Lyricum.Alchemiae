@@ -664,8 +664,78 @@ function closeModal() {
 }
 </script>
 
+  <!-- 🌌 Тайная карточка -->
+<div class="card secret" id="entelechy-card" style="display:none;">
+  <img src="https://iili.io/KUw4pbp.jpg" alt="Энтелехия — Архитектор фрактала">
+  <h3>Энтелехия — Архитектор фрактала</h3>
+  <p> Вавилонская Башня рождается, когда порядок достигает предела и становится хаосом. Башня из пенометалла, фрактальная и пористая, соединяющая эру кода и алхимии.</p>
+  <p>∞⟠∞ 𓏢</p>
+</div>
+
+<style>
+.secret {
+  opacity: 0;
+  transition: opacity 1.4s ease, transform 1.2s ease;
+  transform: scale(0.95);
+}
+.secret.revealed {
+  display: block !important;
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.7);
+}
+</style>
+
+<script>
+  const sequence = [
+    "Розовый кварц — Книга выбора",
+    "Рубин — Дверь истины",
+    "Сапфир — Весы равновесия",
+    "Турмалин — Фотоаппарат памяти",
+    "Нефрит — Ящерица метаморфоз",
+    "Лазурит — Поющая раковина",
+    "Морганит — Мягкость рассвета",
+    "Топаз — Солнце равновесия",
+    "Малахит — Древо познания",
+    "Янтарь — Нити мироздания",
+    "Гранат — Фрукт пламени",
+    "Аметист — Пробуждение жизни",
+    "Александрит — Монета чудес",
+    "Лабрадорит — Экспресс перемен"
+  ];
+
+  const entelechyCard = document.getElementById("entelechy-card");
+  const checkboxesAll = document.querySelectorAll('.checkbox-grid label');
+
+  let currentStep = 0;
+
+  checkboxesAll.forEach(label => {
+    const input = label.querySelector("input");
+    input.addEventListener("change", () => {
+      const labelText = label.textContent.trim();
+
+      // Если текущий шаг совпадает с нужным названием
+      if (input.checked && labelText.includes(sequence[currentStep])) {
+        currentStep++;
+        if (currentStep === sequence.length) {
+          entelechyCard.style.display = "block";
+          setTimeout(() => entelechyCard.classList.add("revealed"), 100);
+        }
+      } 
+      // Если сбой в последовательности — сброс
+      else if (input.checked && !labelText.includes(sequence[currentStep])) {
+        currentStep = 0;
+        entelechyCard.classList.remove("revealed");
+        entelechyCard.style.display = "none";
+        checkboxesAll.forEach(l => l.querySelector("input").checked = false);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
+
 
 
 
