@@ -688,7 +688,7 @@ footer p {
   <img id="modalImage" src="">
 </div>
 
-<<script>
+<script>
   const sequence = [
     "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
     "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
@@ -703,11 +703,19 @@ footer p {
     input.addEventListener('change', () => {
       const name = input.parentElement.textContent.split('—')[0].trim();
 
+      // Добавляем в последовательность при выборе
       if (input.checked) progress.push(name);
       else progress = progress.filter(n => n !== name);
 
-      // Если последовательность полностью совпала — показать фигурку
-      if (progress.join(',') === sequence.join(',')) {
+      // Проверяем текущий шаг
+      const currentStep = sequence[progress.length - 1];
+      if (name !== currentStep) {
+        progress = []; // сброс при ошибке
+      }
+
+      // Если вся последовательность совпала
+      if (progress.length === sequence.length &&
+          JSON.stringify(progress) === JSON.stringify(sequence)) {
         entelechy.style.display = 'block';
         entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
@@ -715,9 +723,9 @@ footer p {
   });
 </script>
 
-  
 </body>
 </html>
+
 
 
 
