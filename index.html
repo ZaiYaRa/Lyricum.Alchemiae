@@ -106,6 +106,51 @@
       box-shadow: 0 0 25px rgba(255, 230, 180, 0.8);
       animation: fadeIn 1.4s ease forwards;
     }
+    /* ✴ Алхимико-магическое проявление Энтелехии */
+@keyframes alchemicalGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+    box-shadow: 0 0 0px rgba(255, 240, 200, 0);
+    filter: hue-rotate(200deg) brightness(0.5);
+  }
+  25% {
+    opacity: 0.6;
+    transform: scale(1.02) rotate(1deg);
+    box-shadow: 0 0 20px rgba(255, 240, 200, 0.6),
+                0 0 40px rgba(150, 200, 255, 0.4);
+    filter: hue-rotate(300deg) brightness(1.2);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 230, 150, 0.8),
+                0 0 70px rgba(120, 200, 255, 0.7),
+                0 0 100px rgba(255, 255, 255, 0.3);
+    filter: hue-rotate(360deg) brightness(1.5);
+  }
+  75% {
+    transform: scale(1.03);
+    box-shadow: 0 0 60px rgba(255, 240, 180, 0.8),
+                0 0 120px rgba(180, 220, 255, 0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(255, 230, 180, 0.8);
+    filter: hue-rotate(0deg) brightness(1);
+  }
+}
+
+/* Активное магическое проявление */
+#entelechy.visible {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 25px rgba(255, 230, 180, 0.8);
+  animation: alchemicalGlow 3.2s ease forwards;
+}
+
 
     #entelechy img {
       width: 100%;
@@ -584,6 +629,7 @@
   </script>
 </body>
 </html>
+
 
 
 
