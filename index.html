@@ -495,11 +495,34 @@
     let afterSum = 0;
     let symbol = "𓏢";
 
-    selected.forEach(b => {
-      beforeSum += parseInt(b.dataset.before);
-      afterSum += parseInt(b.dataset.after);
-      symbol = b.dataset.symbol;
-    });
+    function updateTotal() {
+  const selected = Array.from(checkboxes).filter(b => b.checked);
+
+  if (selected.length === 0) {
+    total.textContent = "0𓏢";
+    return;
+  }
+
+  let beforeSum = 0;
+  let afterSum = 0;
+  const symbols = [];
+
+  selected.forEach(b => {
+    beforeSum += parseInt(b.dataset.before);
+    afterSum += parseInt(b.dataset.after);
+    symbols.push(b.dataset.symbol);
+  });
+
+  // 🔮 Выбираем символ на основе суммы (а не случайно)
+  const index = beforeSum % symbols.length;
+  const symbol = symbols[index];
+
+  total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+
+  totalBox.classList.add("flash");
+  setTimeout(() => totalBox.classList.remove("flash"), 400);
+}
+
 
     sumField.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
 
@@ -629,6 +652,7 @@
   </script>
 </body>
 </html>
+
 
 
 
