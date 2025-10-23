@@ -477,39 +477,40 @@
   }
 
   // --- 🧮 Подсчёт алхимической суммы ---
-  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-  const total = document.getElementById('sum');
-  const totalBox = document.getElementById('total');
+     const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+    const total = document.getElementById('sum');
+    const totalBox = document.getElementById('total');
 
-  checkboxes.forEach(box => box.addEventListener('change', updateTotal));
-
-  function updateTotal() {
-    const selected = Array.from(checkboxes).filter(b => b.checked);
-
-    if (selected.length === 0) {
-      total.textContent = "0𓏢";
-      return;
-    }
-
-    let beforeSum = 0;
-    let afterSum = 0;
-    const symbols = [];
-
-    selected.forEach(b => {
-      beforeSum += parseInt(b.dataset.before);
-      afterSum += parseInt(b.dataset.after);
-      symbols.push(b.dataset.symbol);
+    checkboxes.forEach(box => {
+      box.addEventListener('change', updateTotal);
     });
 
-    // 🔮 Алхимический выбор символа
-    const index = (beforeSum + afterSum) % symbols.length;
-    const symbol = symbols[index];
+    function updateTotal() {
+      const selected = Array.from(checkboxes).filter(b => b.checked);
+      if (selected.length === 0) {
+        total.textContent = "0𓏢";
+        return;
+      }
 
-    total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+      // Подсчёт по частям
+      let beforeSum = 0;
+      let afterSum = 0;
+      let lastSymbol = "𓏢";
 
-    totalBox.classList.add("flash");
-    setTimeout(() => totalBox.classList.remove("flash"), 400);
-  }
+      selected.forEach(b => {
+        beforeSum += parseInt(b.dataset.before);
+        afterSum += parseInt(b.dataset.after);
+        const symbols = Array.from(checkboxes).map(b => b.dataset.symbol);
+lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
+      });
+
+      total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
+
+      // Эффект "вспышки" алхимического света
+      totalBox.classList.add("flash");
+      setTimeout(() => totalBox.classList.remove("flash"), 400);
+    }
+
 
   // --- ✴ Тайная фигурка "Энтелехия — Архитектор фрактала" ---
   const sequence = [
@@ -633,6 +634,7 @@
   </script>
 </body>
 </html>
+
 
 
 
