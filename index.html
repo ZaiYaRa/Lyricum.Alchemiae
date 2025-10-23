@@ -398,36 +398,52 @@
   </style>
 
   <script>
-    const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-    const total = document.getElementById('sum');
-    const totalBox = document.getElementById('total');
+  function openModal(src) {
+    document.getElementById("modalImage").src = src;
+    document.getElementById("imageModal").style.display = "flex";
+  }
 
-    checkboxes.forEach(box => box.addEventListener('change', updateTotal));
+  function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
 
-    function updateTotal() {
-      const selected = Array.from(checkboxes).filter(b => b.checked);
+  // ✴ Логика Энтелехии
+  const sequence = [
+    "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
+    "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
+    "Гранат", "Аметист", "Александрит", "Лабрадорит"
+  ];
 
-      if (selected.length === 0) {
-        total.textContent = "0𓏢";
-        return;
+  let progress = [];
+  const entelechy = document.getElementById('entelechy');
+  const container = document.getElementById('cards-container');
+  const checkLabels = document.querySelectorAll('.checkbox-grid label');
+
+  checkLabels.forEach(label => {
+    const input = label.querySelector('input');
+    input.addEventListener('change', () => {
+      const name = label.textContent.trim().split('—')[0].trim();
+
+      if (input.checked) {
+        progress.push(name);
+      } else {
+        progress = progress.filter(n => n !== name);
       }
 
-      let beforeSum = 0;
-      let afterSum = 0;
-      let symbol = "𓏢";
+      // если порядок совпадает с заданной последовательностью
+      if (JSON.stringify(progress) === JSON.stringify(sequence)) {
+        if (!entelechy.classList.contains('visible')) {
+          entelechy.classList.add('visible');
+          container.appendChild(entelechy);
+          entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        entelechy.classList.remove('visible');
+      }
+    });
+  });
+</script>
 
-      selected.forEach(b => {
-        beforeSum += parseInt(b.dataset.before);
-        afterSum += parseInt(b.dataset.after);
-        symbol = b.dataset.symbol;
-      });
-
-      total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
-
-      totalBox.classList.add("flash");
-      setTimeout(() => totalBox.classList.remove("flash"), 400);
-    }
-  </script>
 </section>
 
   <!-- 🌙 О компании -->
@@ -503,4 +519,5 @@
   </script>
 </body>
 </html>
+
 
