@@ -319,7 +319,116 @@
       <label><input type="checkbox" data-before="4" data-symbol="🜊" data-after="96"> Топаз — Солнце равновесия</label> 
     </div>
     <div id="total">Итог: <span id="sum">0𓏢</span></div>
-  </section>
+
+  <style>
+    #price-section {
+      text-align: center;
+      padding: 40px 20px;
+      color: #222;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid gold;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      margin: 50px auto;
+      width: 80%;
+    }
+
+    .section-title {
+      font-family: 'Daneehand Regular Cyr', cursive;
+      font-size: 2em;
+      color: #d8b45b;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px rgba(255, 255, 200, 0.6);
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px 16px;
+      justify-items: stretch;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .checkbox-grid label {
+      display: block;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-family: 'Daneehand Regular Cyr', cursive;
+      font-size: 0.9em;
+      cursor: pointer;
+      color: #222;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-grid label:hover {
+      background: rgba(255, 255, 255, 0.45);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .checkbox-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 601px) and (max-width: 900px) {
+      .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    #total {
+      margin-top: 35px;
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px 30px;
+      border-radius: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #222;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    #total.flash {
+      box-shadow: 0 0 25px rgba(255, 230, 160, 0.9);
+      background: rgba(255, 255, 240, 0.9);
+      color: #b38b2b;
+    }
+  </style>
+
+  <script>
+    const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+    const total = document.getElementById('sum');
+    const totalBox = document.getElementById('total');
+
+    checkboxes.forEach(box => box.addEventListener('change', updateTotal));
+
+    function updateTotal() {
+      const selected = Array.from(checkboxes).filter(b => b.checked);
+
+      if (selected.length === 0) {
+        total.textContent = "0𓏢";
+        return;
+      }
+
+      let beforeSum = 0;
+      let afterSum = 0;
+      let symbol = "𓏢";
+
+      selected.forEach(b => {
+        beforeSum += parseInt(b.dataset.before);
+        afterSum += parseInt(b.dataset.after);
+        symbol = b.dataset.symbol;
+      });
+
+      total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+
+      totalBox.classList.add("flash");
+      setTimeout(() => totalBox.classList.remove("flash"), 400);
+    }
+  </script>
+</section>
 
   <!-- 🌙 О компании -->
   <section>
@@ -394,3 +503,4 @@
   </script>
 </body>
 </html>
+
