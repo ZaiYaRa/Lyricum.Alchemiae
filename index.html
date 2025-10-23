@@ -410,6 +410,11 @@
       background: rgba(255, 255, 240, 0.9);
       color: #b38b2b;
     }
+          // Эффект "вспышки" алхимического света
+      totalBox.classList.add("flash");
+      setTimeout(() => totalBox.classList.remove("flash"), 400);
+    }
+
   </style>
 
    
@@ -579,6 +584,7 @@
   </script>
 </body>
 </html>
+
 
 
 
