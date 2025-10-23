@@ -477,54 +477,35 @@
   }
 
   // --- 🧮 Подсчёт алхимической суммы ---
-  const sumBoxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-  const sumField = document.getElementById('sum');
+  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+  const total = document.getElementById('sum');
   const totalBox = document.getElementById('total');
 
-  sumBoxes.forEach(b => b.addEventListener('change', updateTotal));
+  checkboxes.forEach(box => box.addEventListener('change', updateTotal));
 
   function updateTotal() {
-    const selected = Array.from(sumBoxes).filter(b => b.checked);
+    const selected = Array.from(checkboxes).filter(b => b.checked);
 
     if (selected.length === 0) {
-      sumField.textContent = "0𓏢";
+      total.textContent = "0𓏢";
       return;
     }
 
     let beforeSum = 0;
     let afterSum = 0;
-    let symbol = "𓏢";
+    const symbols = [];
 
-    function updateTotal() {
-  const selected = Array.from(checkboxes).filter(b => b.checked);
+    selected.forEach(b => {
+      beforeSum += parseInt(b.dataset.before);
+      afterSum += parseInt(b.dataset.after);
+      symbols.push(b.dataset.symbol);
+    });
 
-  if (selected.length === 0) {
-    total.textContent = "0𓏢";
-    return;
-  }
+    // 🔮 Алхимический выбор символа
+    const index = (beforeSum + afterSum) % symbols.length;
+    const symbol = symbols[index];
 
-  let beforeSum = 0;
-  let afterSum = 0;
-  const symbols = [];
-
-  selected.forEach(b => {
-    beforeSum += parseInt(b.dataset.before);
-    afterSum += parseInt(b.dataset.after);
-    symbols.push(b.dataset.symbol);
-  });
-
-  // 🔮 Выбираем символ на основе суммы (а не случайно)
-  const index = beforeSum % symbols.length;
-  const symbol = symbols[index];
-
-  total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
-
-  totalBox.classList.add("flash");
-  setTimeout(() => totalBox.classList.remove("flash"), 400);
-}
-
-
-    sumField.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+    total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
 
     totalBox.classList.add("flash");
     setTimeout(() => totalBox.classList.remove("flash"), 400);
@@ -652,6 +633,7 @@
   </script>
 </body>
 </html>
+
 
 
 
