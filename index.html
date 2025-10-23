@@ -397,48 +397,52 @@
     }
   </style>
 
-    <script>
-    const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-    const total = document.getElementById('sum');
-    const totalBox = document.getElementById('total');
-
-    checkboxes.forEach(box => box.addEventListener('change', updateTotal));
-
-    function updateTotal() {
-      const selected = Array.from(checkboxes).filter(b => b.checked);
-
-      if (selected.length === 0) {
-        total.textContent = "0𓏢";
-        return;
-      }
-
-      let beforeSum = 0;
-      let afterSum = 0;
-      let symbol = "𓏢";
-
-      selected.forEach(b => {
-        beforeSum += parseInt(b.dataset.before);
-        afterSum += parseInt(b.dataset.after);
-        symbol = b.dataset.symbol;
-      });
-
-      total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
-
-      totalBox.classList.add("flash");
-      setTimeout(() => totalBox.classList.remove("flash"), 400);
-    }
-  </script>
+   
   <script>
+  // --- 🌙 Модальное окно для изображений ---
   function openModal(src) {
-    document.getElementById("modalImage").src = src;
-    document.getElementById("imageModal").style.display = "flex";
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = src;
+    modal.style.display = "flex";
   }
 
   function closeModal() {
     document.getElementById("imageModal").style.display = "none";
   }
 
-  // ✴ Логика Энтелехии
+  // --- 🧮 Подсчёт алхимической суммы ---
+  const sumBoxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+  const sumField = document.getElementById('sum');
+  const totalBox = document.getElementById('total');
+
+  sumBoxes.forEach(b => b.addEventListener('change', updateTotal));
+
+  function updateTotal() {
+    const selected = Array.from(sumBoxes).filter(b => b.checked);
+
+    if (selected.length === 0) {
+      sumField.textContent = "0𓏢";
+      return;
+    }
+
+    let beforeSum = 0;
+    let afterSum = 0;
+    let symbol = "𓏢";
+
+    selected.forEach(b => {
+      beforeSum += parseInt(b.dataset.before);
+      afterSum += parseInt(b.dataset.after);
+      symbol = b.dataset.symbol;
+    });
+
+    sumField.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+
+    totalBox.classList.add("flash");
+    setTimeout(() => totalBox.classList.remove("flash"), 400);
+  }
+
+  // --- ✴ Тайная фигурка "Энтелехия — Архитектор фрактала" ---
   const sequence = [
     "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
     "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
@@ -448,9 +452,9 @@
   let progress = [];
   const entelechy = document.getElementById('entelechy');
   const container = document.getElementById('cards-container');
-  const checkLabels = document.querySelectorAll('.checkbox-grid label');
+  const labelBoxes = document.querySelectorAll('.checkbox-grid label');
 
-  checkLabels.forEach(label => {
+  labelBoxes.forEach(label => {
     const input = label.querySelector('input');
     input.addEventListener('change', () => {
       const name = label.textContent.trim().split('—')[0].trim();
@@ -461,19 +465,29 @@
         progress = progress.filter(n => n !== name);
       }
 
-      // если порядок совпадает с заданной последовательностью
-      if (JSON.stringify(progress) === JSON.stringify(sequence)) {
-        if (!entelechy.classList.contains('visible')) {
-          entelechy.classList.add('visible');
-          container.appendChild(entelechy);
-          entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Сравнение только первых N элементов, чтобы избежать лишних отклонений
+      const current = sequence.slice(0, progress.length).join(',');
+           const entered = progress.join(',');
+
+      if (entered === current) {
+        // Проверяем, полностью ли совпала последовательность
+        if (progress.length === sequence.length) {
+          if (!entelechy.classList.contains('visible')) {
+            entelechy.classList.add('visible');
+            container.appendChild(entelechy);
+            entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
       } else {
+        // Если последовательность нарушена — сбрасываем
+        progress = [];
         entelechy.classList.remove('visible');
       }
     });
   });
 </script>
+
+
 
 </section>
 
@@ -550,6 +564,7 @@
   </script>
 </body>
 </html>
+
 
 
 
