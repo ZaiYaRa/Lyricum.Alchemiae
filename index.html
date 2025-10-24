@@ -476,6 +476,22 @@
   // --- 🧮 Подсчёт алхимической суммы ---
      <script>
 document.addEventListener("DOMContentLoaded", () => {
+  /* 🌙 МОДАЛЬНОЕ ОКНО ДЛЯ ИЗОБРАЖЕНИЙ */
+  function openModal(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = src;
+    modal.style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+
+  /* 🧮 АЛХИМИЧЕСКИЙ ПОДСЧЁТ СУММЫ */
   const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
   const total = document.getElementById('sum');
   const totalBox = document.getElementById('total');
@@ -500,15 +516,56 @@ document.addEventListener("DOMContentLoaded", () => {
       afterSum += parseInt(b.dataset.after);
     });
 
-    // выбираем случайный символ среди отмеченных
+    // 🎲 выбираем случайный символ из отмеченных фигурок
     const randomBox = selected[Math.floor(Math.random() * selected.length)];
     lastSymbol = randomBox.dataset.symbol;
 
     total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
 
+    // ✴ Эффект вспышки алхимического света
     totalBox.classList.add("flash");
     setTimeout(() => totalBox.classList.remove("flash"), 400);
   }
+
+  /* ✴ ТАЙНАЯ ФИГУРКА — "ЭНТЕЛЕХИЯ: АРХИТЕКТОР ФРАКТАЛА" */
+  const sequence = [
+    "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
+    "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
+    "Гранат", "Аметист", "Александрит", "Лабрадорит"
+  ];
+
+  let progress = [];
+  const entelechy = document.getElementById('entelechy');
+  const container = document.getElementById('cards-container');
+  const labelBoxes = document.querySelectorAll('.checkbox-grid label');
+
+  labelBoxes.forEach(label => {
+    const input = label.querySelector('input');
+    input.addEventListener('change', () => {
+      const name = label.textContent.trim().split('—')[0].trim();
+
+      if (input.checked) {
+        progress.push(name);
+      } else {
+        progress = progress.filter(n => n !== name);
+      }
+
+      // Проверяем последовательность выбора
+      const correct = sequence.slice(0, progress.length).join(',');
+      const current = progress.join(',');
+
+      if (current === correct) {
+        if (progress.length === sequence.length && !entelechy.classList.contains('visible')) {
+          entelechy.classList.add('visible');
+          container.appendChild(entelechy);
+          entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        progress = [];
+        entelechy.classList.remove('visible');
+      }
+    });
+  });
 });
 </script>
 
@@ -591,6 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
+
 
 
 
