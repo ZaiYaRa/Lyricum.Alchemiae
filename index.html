@@ -460,45 +460,24 @@
   </style>
 
    
-  <script>
-  // --- 🌙 Модальное окно для изображений ---
-  function openModal(src) {
-    const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    modalImage.src = src;
-    modal.style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
-  }
-
-  // --- 🧮 Подсчёт алхимической суммы ---
-     <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
-  /* 🌙 МОДАЛЬНОЕ ОКНО ДЛЯ ИЗОБРАЖЕНИЙ */
-  function openModal(src) {
+
+  /* 🌙 МОДАЛЬНОЕ ОКНО */
+  window.openModal = (src) => {
     const modal = document.getElementById("imageModal");
     const modalImage = document.getElementById("modalImage");
     modalImage.src = src;
     modal.style.display = "flex";
-  }
-
-  function closeModal() {
+  };
+  window.closeModal = () => {
     document.getElementById("imageModal").style.display = "none";
-  }
+  };
 
-  window.openModal = openModal;
-  window.closeModal = closeModal;
-
-  /* 🧮 АЛХИМИЧЕСКИЙ ПОДСЧЁТ СУММЫ */
+  /* 🧮 АЛХИМИЧЕСКИЙ ПОДСЧЁТ */
   const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
   const total = document.getElementById('sum');
   const totalBox = document.getElementById('total');
-
-  checkboxes.forEach(box => {
-    box.addEventListener('change', updateTotal);
-  });
 
   function updateTotal() {
     const selected = Array.from(checkboxes).filter(b => b.checked);
@@ -509,25 +488,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let beforeSum = 0;
     let afterSum = 0;
-    let lastSymbol = "𓏢";
 
     selected.forEach(b => {
       beforeSum += parseInt(b.dataset.before);
       afterSum += parseInt(b.dataset.after);
     });
 
-    // 🎲 выбираем случайный символ из отмеченных фигурок
+    // случайный алхимический символ
     const randomBox = selected[Math.floor(Math.random() * selected.length)];
-    lastSymbol = randomBox.dataset.symbol;
+    const symbol = randomBox.dataset.symbol;
 
-    total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
+    total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
 
-    // ✴ Эффект вспышки алхимического света
+    // вспышка
     totalBox.classList.add("flash");
     setTimeout(() => totalBox.classList.remove("flash"), 400);
   }
 
-  /* ✴ ТАЙНАЯ ФИГУРКА — "ЭНТЕЛЕХИЯ: АРХИТЕКТОР ФРАКТАЛА" */
+  checkboxes.forEach(box => {
+    box.addEventListener("change", updateTotal);
+  });
+
+  /* ✴ ЭНТЕЛЕХИЯ */
   const sequence = [
     "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
     "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
@@ -537,22 +519,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let progress = [];
   const entelechy = document.getElementById('entelechy');
   const container = document.getElementById('cards-container');
-  const labelBoxes = document.querySelectorAll('.checkbox-grid label');
 
-  labelBoxes.forEach(label => {
-    const input = label.querySelector('input');
-    input.addEventListener('change', () => {
+  checkboxes.forEach(box => {
+    box.addEventListener("change", () => {
+      const label = box.closest('label');
       const name = label.textContent.trim().split('—')[0].trim();
 
-      if (input.checked) {
+      if (box.checked) {
         progress.push(name);
       } else {
         progress = progress.filter(n => n !== name);
       }
 
-      // Проверяем последовательность выбора
-      const correct = sequence.slice(0, progress.length).join(',');
       const current = progress.join(',');
+      const correct = sequence.slice(0, progress.length).join(',');
 
       if (current === correct) {
         if (progress.length === sequence.length && !entelechy.classList.contains('visible')) {
@@ -566,8 +546,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
 });
 </script>
+
 
 
 
@@ -648,6 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
+
 
 
 
