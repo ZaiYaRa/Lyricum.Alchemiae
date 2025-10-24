@@ -460,54 +460,41 @@
   </style>
 
    
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+  <script>
+    const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+    const total = document.getElementById('sum');
+    const totalBox = document.getElementById('total');
 
-  /* 🌙 МОДАЛЬНОЕ ОКНО */
-  window.openModal = (src) => {
-    const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    modalImage.src = src;
-    modal.style.display = "flex";
-  };
-  window.closeModal = () => {
-    document.getElementById("imageModal").style.display = "none";
-  };
-
-  /* 🧮 АЛХИМИЧЕСКИЙ ПОДСЧЁТ */
-  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-  const total = document.getElementById('sum');
-  const totalBox = document.getElementById('total');
-
-  function updateTotal() {
-    const selected = Array.from(checkboxes).filter(b => b.checked);
-    if (selected.length === 0) {
-      total.textContent = "0𓏢";
-      return;
-    }
-
-    let beforeSum = 0;
-    let afterSum = 0;
-
-    selected.forEach(b => {
-      beforeSum += parseInt(b.dataset.before);
-      afterSum += parseInt(b.dataset.after);
+    checkboxes.forEach(box => {
+      box.addEventListener('change', updateTotal);
     });
 
-    // случайный алхимический символ
-    const randomBox = selected[Math.floor(Math.random() * selected.length)];
-    const symbol = randomBox.dataset.symbol;
+    function updateTotal() {
+      const selected = Array.from(checkboxes).filter(b => b.checked);
+      if (selected.length === 0) {
+        total.textContent = "0𓏢";
+        return;
+      }
 
-    total.textContent = `${beforeSum}${symbol}${afterSum}𓏢`;
+      // Подсчёт по частям
+      let beforeSum = 0;
+      let afterSum = 0;
+      let lastSymbol = "𓏢";
 
-    // вспышка
-    totalBox.classList.add("flash");
-    setTimeout(() => totalBox.classList.remove("flash"), 400);
-  }
+      selected.forEach(b => {
+        beforeSum += parseInt(b.dataset.before);
+        afterSum += parseInt(b.dataset.after);
+        const symbols = Array.from(checkboxes).map(b => b.dataset.symbol);
+lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
+      });
 
-  checkboxes.forEach(box => {
-    box.addEventListener("change", updateTotal);
-  });
+      total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
+
+      // Эффект "вспышки" алхимического света
+      totalBox.classList.add("flash");
+      setTimeout(() => totalBox.classList.remove("flash"), 400);
+    }
+
 
   /* ✴ ЭНТЕЛЕХИЯ */
   const sequence = [
@@ -630,6 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
+
 
 
 
