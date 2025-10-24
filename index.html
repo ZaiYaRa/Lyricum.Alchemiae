@@ -512,59 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-      // Подсчёт по частям
-      
 
-      // Эффект "вспышки" алхимического света
-      totalBox.classList.add("flash");
-      setTimeout(() => totalBox.classList.remove("flash"), 400);
-    }
-
-
-  // --- ✴ Тайная фигурка "Энтелехия — Архитектор фрактала" ---
-  const sequence = [
- "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
-    "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
-    "Гранат", "Аметист", "Александрит", "Лабрадорит".
-  ];
-
-  let progress = [];
-  const entelechy = document.getElementById('entelechy');
-  const container = document.getElementById('cards-container');
-  const labelBoxes = document.querySelectorAll('.checkbox-grid label');
-
-  labelBoxes.forEach(label => {
-    const input = label.querySelector('input');
-    input.addEventListener('change', () => {
-      const name = label.textContent.trim().split('—')[0].trim();
-
-      if (input.checked) {
-        progress.push(name);
-      } else {
-        progress = progress.filter(n => n !== name);
-      }
-
-      // Сравнение только первых N элементов, чтобы избежать лишних отклонений
-      const current = sequence.slice(0, progress.length).join(',');
-           const entered = progress.join(',');
-
-      if (entered === current) {
-        // Проверяем, полностью ли совпала последовательность
-        if (progress.length === sequence.length) {
-          if (!entelechy.classList.contains('visible')) {
-            entelechy.classList.add('visible');
-            container.appendChild(entelechy);
-            entelechy.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
-      } else {
-        // Если последовательность нарушена — сбрасываем
-        progress = [];
-        entelechy.classList.remove('visible');
-      }
-    });
-  });
-</script>
 
 
 
@@ -643,6 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 </body>
 </html>
+
 
 
 
