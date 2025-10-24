@@ -575,48 +575,9 @@ lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
     <img id="modalImage" src="">
   </div>
 
-  <script>
-    function openModal(src) {
-      document.getElementById("modalImage").src = src;
-      document.getElementById("imageModal").style.display = "flex";
-    }
-    function closeModal() {
-      document.getElementById("imageModal").style.display = "none";
-    }
-
-    // ✴ Логика Энтелехии
-    const sequence = [
-      "Розовый кварц", "Рубин", "Сапфир", "Турмалин", "Нефрит",
-      "Лазурит", "Морганит", "Топаз", "Малахит", "Янтарь",
-      "Гранат", "Аметист", "Александрит", "Лабрадорит"
-    ];
-    let progress = [];
-    const entelechy = document.getElementById('entelechy');
-    const container = document.getElementById('cards-container');
-    const checkboxes = document.querySelectorAll('.checkbox-grid label');
-
-    checkboxes.forEach(label => {
-      const input = label.querySelector('input');
-      input.addEventListener('change', () => {
-        const name = label.textContent.trim().split('—')[0].trim();
-
-        if (input.checked) progress.push(name);
-        else progress = progress.filter(n => n !== name);
-
-        if (JSON.stringify(progress) === JSON.stringify(sequence)) {
-          if (!entelechy.classList.contains('visible')) {
-            entelechy.classList.add('visible');
-            container.appendChild(entelechy);
-            entelechy.scrollIntoView({behavior: 'smooth', block: 'center'});
-          }
-        } else {
-          entelechy.classList.remove('visible');
-        }
-      });
-    });
-  </script>
 </body>
 </html>
+
 
 
 
