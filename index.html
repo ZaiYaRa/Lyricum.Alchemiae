@@ -477,34 +477,46 @@
   }
 
   // --- 🧮 Подсчёт алхимической суммы ---
-     const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
-    const total = document.getElementById('sum');
-    const totalBox = document.getElementById('total');
+     <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const checkboxes = document.querySelectorAll('.checkbox-grid input[type="checkbox"]');
+  const total = document.getElementById('sum');
+  const totalBox = document.getElementById('total');
 
-    checkboxes.forEach(box => {
-      box.addEventListener('change', updateTotal);
+  checkboxes.forEach(box => {
+    box.addEventListener('change', updateTotal);
+  });
+
+  function updateTotal() {
+    const selected = Array.from(checkboxes).filter(b => b.checked);
+    if (selected.length === 0) {
+      total.textContent = "0𓏢";
+      return;
+    }
+
+    let beforeSum = 0;
+    let afterSum = 0;
+    let lastSymbol = "𓏢";
+
+    selected.forEach(b => {
+      beforeSum += parseInt(b.dataset.before);
+      afterSum += parseInt(b.dataset.after);
     });
 
-    function updateTotal() {
-      const selected = Array.from(checkboxes).filter(b => b.checked);
-      if (selected.length === 0) {
-        total.textContent = "0𓏢";
-        return;
-      }
+    // выбираем случайный символ среди отмеченных
+    const randomBox = selected[Math.floor(Math.random() * selected.length)];
+    lastSymbol = randomBox.dataset.symbol;
+
+    total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
+
+    totalBox.classList.add("flash");
+    setTimeout(() => totalBox.classList.remove("flash"), 400);
+  }
+});
+</script>
 
       // Подсчёт по частям
-      let beforeSum = 0;
-      let afterSum = 0;
-      let lastSymbol = "𓏢";
-
-      selected.forEach(b => {
-        beforeSum += parseInt(b.dataset.before);
-        afterSum += parseInt(b.dataset.after);
-        const symbols = Array.from(checkboxes).map(b => b.dataset.symbol);
-lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
-      });
-
-      total.textContent = `${beforeSum}${lastSymbol}${afterSum}𓏢`;
+      
 
       // Эффект "вспышки" алхимического света
       totalBox.classList.add("flash");
@@ -634,6 +646,7 @@ lastSymbol = symbols[Math.floor(Math.random() * symbols.length)];;
   </script>
 </body>
 </html>
+
 
 
 
